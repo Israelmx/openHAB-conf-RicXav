@@ -1,0 +1,233 @@
+//Rules Acuario RicXav
+
+var boolean ventshroffacro = false
+var HSBType hsbValue
+var int redValue
+var int greenValue
+var int blueValue
+var String RGBvalues
+
+var boolean tmp_alta_flag = false
+var boolean tmp_baja_flag = false
+var boolean ph_alto_flag = false
+var boolean ph_bajo_flag = false
+
+
+//Regla para poner el color segun la paleta de colres
+rule "LEDSRGBLamparaAcuario"
+when
+ Item It_LEDsControlColor changed
+then
+     hsbValue = It_LEDsControlColor.state as HSBType
+     redValue = hsbValue.red.intValue
+     greenValue = hsbValue.green.intValue
+     blueValue = hsbValue.blue.intValue
+     RGBvalues= redValue.toString + ";" + greenValue.toString + ";" + blueValue.toString
+     sendCommand(It_LEDsControlString, RGBvalues)
+     logInfo("It_LEDsControlColor", RGBvalues )
+end
+
+//Regla Alarma de Temperatura alta Acuario Dormitorio
+rule "Alarma Temp Acuario Alta"
+when
+  Item It_AcuarioTemp changed
+then
+  if(It_AcuarioTemp.state > 26.5)
+  {
+    if(tmp_alta_flag == false)
+    {
+      sendBroadcastNotification("Alarma Temperatura Acuario RicXav Alta")
+      tmp_alta_flag = true
+    }
+  }
+  if(It_AcuarioTemp.state < 26.0)
+  {
+    if(tmp_alta_flag == true)
+    {
+      sendBroadcastNotification("Temperatura Acuario RicXav Normal")
+      tmp_alta_flag = false
+    }
+  }
+end
+
+//Regla Alarma de Temperatura baja Acuario Dormitorio
+rule "Alarma Temp Acuario Baja"
+when
+  Item It_AcuarioTemp changed
+then
+  if(It_AcuarioTemp.state < 23.5)
+  {
+    if(tmp_baja_flag == false)
+    {
+      sendBroadcastNotification("Alarma Temperatura Acuario RicXav Baja")
+      tmp_baja_flag = true
+    }
+  }
+  if(It_AcuarioTemp.state > 24.5)
+  {
+    if(tmp_baja_flag == true)
+    {
+      sendBroadcastNotification("Temperatura Acuario RicXav Normal")
+      tmp_baja_flag = false
+    }
+  }
+end
+
+//Regla Controlar FANI por temperatura
+rule "Control FANI Temp"
+when
+  Item It_TempLampAcroDisI changed
+then
+  if(It_TempLampAcroDisI.state > 45)
+  {
+    sendBroadcastNotification("Alarma Temperatura Lampara Izquierda alta")
+  }
+  
+  if(It_TempLampAcroDisI.state > 38)
+  {
+    if(It_FanAcroRule.state == ON)
+    {
+      if(It_LamparaAcuarioSwitchFanI.state==OFF)
+      {
+        sendCommand(It_LamparaAcuarioSwitchFanI,ON)
+      }
+    }
+  }
+
+  if(It_TempLampAcroDisI.state < 33)
+  {
+    if(It_FanAcroRule.state == ON)
+    {
+      if(It_LamparaAcuarioSwitchFanI.state==ON)
+      {
+        sendCommand(It_LamparaAcuarioSwitchFanI,OFF)
+      }
+    }
+  }
+end
+
+//Regla Controlar FAND por temperatura
+rule "Control FAND Temp"
+when
+  Item It_TempLampAcroDisD changed
+then
+  if(It_TempLampAcroDisD.state > 45)
+  {
+    sendBroadcastNotification("Alarma Temperatura Lampara Derecha alta")
+  }
+
+  if(It_TempLampAcroDisD.state > 38)
+  {
+    if(It_FanAcroRule.state == ON)
+    {
+      if(It_LamparaAcuarioSwitchFanD.state==OFF)
+      {
+        sendCommand(It_LamparaAcuarioSwitchFanD,ON)
+      }
+    }
+  }
+  if(It_TempLampAcroDisD.state < 33)
+  {
+    if(It_FanAcroRule.state == ON)
+    {
+      if(It_LamparaAcuarioSwitchFanD.state==ON)
+      {
+        sendCommand(It_LamparaAcuarioSwitchFanD,OFF)
+      }
+    }
+  }
+end
+
+//Inicia Amanecer a las 11:00 y que dure 60 minutos
+rule "Hora Amanecer"
+when
+ Time cron "0 30 10 ? * * *"
+then
+      sendCommand(It_LEDsControlSpeed,"60")
+      sendCommand(It_LEDsControlEffect,"AMANECER")
+end
+
+//Inicia Atardecer a las 18:00 y que dure 60 minutos
+rule "Hora Atardecer"
+when
+ Time cron "0 30 18 ? * * *"
+then
+      sendCommand(It_LEDsControlSpeed,"60")
+      sendCommand(It_LEDsControlEffect,"ATARDECER")
+end
+
+//Regla Alarma Nivel Rellenador Acuario
+rule "Alarma Nivel Rellenador Acuario RicXav"
+when
+  Item It_AlarmaNivRdr changed
+then
+  if(It_AlarmaNivRdr.state == ON)
+  {
+    sendBroadcastNotification("Alarma Nivel Rellenador Acuario RicXav Bajo")
+  }
+  if(It_AlarmaNivRdr.state == OFF)
+  {
+    sendBroadcastNotification("Nivel Rellenador Acuario RicXav Normal")
+  }
+end
+
+//Regla Alarma de Tiempo Rellenando Acuario
+rule "Alarma Tiempo Rellenando Acuario"
+when
+  Item It_AlarmaOvrTme changed
+then
+  if(It_AlarmaOvrTme.state == ON)
+  {
+    sendBroadcastNotification("Alarma Sobre Tiempo Rellenando Acuario RicXav")
+  }
+  if(It_AlarmaOvrTme.state == OFF)
+  {
+    sendBroadcastNotification("Sobre Tiempo Rellenador Acuario RicXav Reseteado")
+  }
+end
+
+//Regla Alarma de PH alto Acuario RicXav
+rule "Alarma PH Acuario RicXav Alto"
+when
+  Item It_PHAcro changed
+then
+  if(It_PHAcro.state > 7.40)
+  {
+    if(ph_alto_flag == false)
+    {
+      sendBroadcastNotification("Alarma PH Acuario RicXav Alto")
+      ph_alto_flag = true
+    }
+  }
+  if(It_PHAcro.state < 7.10)
+  {
+    if(ph_alto_flag == true)
+    {
+      sendBroadcastNotification("PH Acuario RicXav Normal")
+      ph_alto_flag = false
+    }
+  }
+end
+
+//Regla Alarma de PH bajo Acuario RicXav
+rule "Alarma PH Acuario RicXav Bajo"
+when
+  Item It_PHAcro changed
+then
+  if(It_PHAcro.state < 6.5)
+  {
+    if(ph_bajo_flag == false)
+    {
+      sendBroadcastNotification("Alarma PH Acuario RicXav Bajo")
+      ph_bajo_flag = true
+    }
+  }
+  if(It_PHAcro.state > 6.7)
+  {
+    if(ph_bajo_flag == true)
+    {
+      sendBroadcastNotification("PH Acuario RicXav Normal")
+      ph_bajo_flag = false
+    }
+  }
+end

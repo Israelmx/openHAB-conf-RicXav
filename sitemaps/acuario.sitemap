@@ -1,0 +1,68 @@
+//Sitemap Acuario
+
+sitemap acuario label="Acuario RicXav"
+{
+  Frame label="Control Lampara"
+  {
+    Colorpicker item= It_LEDsControlColor
+    Selection item= It_LEDsControlEffect mappings=["NONE"="NONE", "AMANECER"="AMANECER", "ATARDECER"="ATARDECER"]
+    Switch item= It_LEDsControlSwitchRed
+    Switch item= It_LEDsControlSwitchGreen
+    Switch item= It_LEDsControlSwitchBlue
+    Switch item= It_LEDsControlSwitchWhite
+    Switch item= It_LEDsControlSwitchLL
+    Slider item= It_LEDsControlSpeed  minValue=5 maxValue=100 step=5
+    Slider item= It_LEDsControlBrillo
+    Setpoint item= It_LEDsControlBrillo minValue=0 maxValue=100 step=5
+  }
+  Frame label="Sensores Fuente"
+  {
+    Text item= It_INA226V
+    Text item= It_INA226I
+    Text item= It_INA226P
+    Text item= It_LAMPACROVCC
+  }
+  Frame label="Sensores LEDS"
+  {
+    Text item= It_INA3221VLW1
+    Text item= It_INA3221ILW1
+    Text item= It_INA3221VLW2
+    Text item= It_INA3221ILW2
+    Text item= It_INA3221VLF
+    Text item= It_INA3221ILF
+    Text item= It_INA3221VLR
+    Text item= It_INA3221ILR
+    Text item= It_INA3221VLG
+    Text item= It_INA3221ILG
+    Text item= It_INA3221VLB
+    Text item= It_INA3221ILB
+  }
+  Frame label="Parametros del Acuario"
+  {
+    Text item= It_PHAcro
+    Text item= It_VALTDSAC
+    Text item= It_TempLampAcroDisI
+    Text item= It_TempLampAcroDisD
+    Text item= It_AcuarioTemp
+  }
+
+  Frame label="Varios"
+  {
+    Switch item= It_LamparaAcuarioSwitchFanI
+    Switch item= It_LamparaAcuarioSwitchFanD
+    Switch item= It_FanAcroRule mappings=[ON="ON",OFF="OFF"]
+    Text item= It_LampAcroHeartBeat
+  }
+
+  Frame label="Rellenador Acuario"
+  {
+    Text item= It_NivAguaRellenador
+    Text item= It_NivAguaAcuario
+    Text item= It_VFuente
+    Text item= It_RellenadorHeartBeat
+    Switch item= It_ActDesFunRdr
+    Text item= It_Rellenando
+    Text item= It_AlarmaNivRdr
+    Text item= It_AlarmaOvrTme
+  }
+}

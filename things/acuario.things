@@ -1,0 +1,53 @@
+Bridge mqtt:broker:RicXav_MQTT_Broker [ host="192.168.17.58", secure=false, clientid="RicXav_MQTT_Broker_ID", username="MyUser", password="MyPass"]
+{
+  Thing topic Th_ESP8266_V201_ACRDR "Rellenador Acuario"
+  {
+    Channels:
+      Type number : Ch_RellenadorHeartBeat "Heart Beat"                 [ stateTopic="RicXav/Sala/Acuario/Rellenador/RellenadorHeartBeat" ]
+      Type number : Ch_NivAguaRellenador   "Nivel Agua Rellenador"      [ stateTopic="RicXav/Sala/Acuario/Rellenador/NivAguaRellenador" ]
+      Type number : Ch_VFuente             "Voltaje de Fuente"          [ stateTopic="RicXav/Sala/Acuario/Rellenador/VFuente" ]
+      Type switch : Ch_ActDesFunRdr        "Activar Fun Rellenador"     [ stateTopic="RicXav/Sala/Acuario/Rellenador/ActDesFunRdr/state", commandTopic="RicXav/Sala/Acuario/Rellenador/RcbCmmn/ActDesFunRdr", on="ON", off="OFF" ]
+      Type switch : Ch_AlarmaNivRdr        "Alarma Nivel de Rellenador" [ stateTopic="RicXav/Sala/Acuario/Rellenador/AlarmaRdr/AlarmaNivRdr", on="ON", off="OFF" ]
+      Type switch : Ch_AlarmaOvrTme        "Alarma Over Timer"          [ stateTopic="RicXav/Sala/Acuario/Rellenador/AlarmaRdr/AlarmaOvrTme", on="ON", off="OFF" ]
+      Type switch : Ch_Rellenando          "Rellenando Acuario"         [ stateTopic="RicXav/Sala/Acuario/Rellenador/Rellenando/state", on="ON", off="OFF" ]
+      Type string : Ch_NivAguaAcuario      "Nivel Agua Acuario"         [ stateTopic="RicXav/Sala/Acuario/Rellenador/NivAguaAcuario/state" ]
+  }
+
+  Thing topic Th_ESP32CtrlLampAcrRicXav "Lampara Acuario"
+  {
+    Channels:
+      Type string : Ch_LamparaAcuarioString      "Lampara Acuario"                 [ stateTopic="RicXav/Sala/Acuario/Lampara/Color/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/Color" ]
+      Type string : Ch_LamparaAcuarioEffect      "Lampara Acuario Effects"         [ stateTopic="RicXav/Sala/Acuario/Lampara/Efecto/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/Efecto" ]
+      Type dimmer : Ch_LamparaAcuarioSpeed       "Lampara Acuario Speed"           [ stateTopic="RicXav/Sala/Acuario/Lampara/Speed/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/Speed" ]
+      Type dimmer : Ch_LamparaAcuarioBrillo      "Lampara Acuario Brillo"          [ stateTopic="RicXav/Sala/Acuario/Lampara/Brillo/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/Brillo" ]
+      Type switch : Ch_LamparaAcuarioSwitchRed   "Lampara Acuario LED RED"         [ stateTopic="RicXav/Sala/Acuario/Lampara/LEDRed/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/LEDRed", on="ON", off="OFF" ]
+      Type switch : Ch_LamparaAcuarioSwitchGreen "Lampara Acuario LED GREEN"       [ stateTopic="RicXav/Sala/Acuario/Lampara/LEDGreen/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/LEDGreen", on="ON", off="OFF" ]
+      Type switch : Ch_LamparaAcuarioSwitchBlue  "Lampara Acuario LED BLUE"        [ stateTopic="RicXav/Sala/Acuario/Lampara/LEDBlue/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/LEDBlue", on="ON", off="OFF" ]
+      Type switch : Ch_LamparaAcuarioSwitchWhite "Lampara Acuario LED WHITE"       [ stateTopic="RicXav/Sala/Acuario/Lampara/LEDWhite/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/LEDWhite", on="ON", off="OFF" ]
+      Type switch : Ch_LamparaAcuarioSwitchLL    "Lampara Acuario LUZ DE LUNA"     [ stateTopic="RicXav/Sala/Acuario/Lampara/LEDLuzLuna/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/LEDLuzLuna", on="ON", off="OFF" ]
+      Type number : Ch_LAMPACROVCC               "Voltaje VCC"                     [ stateTopic="RicXav/Sala/Acuario/Lampara/VCC" ]
+      Type number : Ch_INA226V                   "Voltaje Fuente Acuario"          [ stateTopic="RicXav/Sala/Acuario/Lampara/INA226V" ]
+      Type number : Ch_INA226I                   "Corriente Fuente Acuario"        [ stateTopic="RicXav/Sala/Acuario/Lampara/INA226I" ]
+      Type number : Ch_INA226P                   "Potencia Fuente Acuario"         [ stateTopic="RicXav/Sala/Acuario/Lampara/INA226P" ]
+      Type number : Ch_INA3221VLW1               "Voltaje LED WHITE1"              [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221VLW1" ]
+      Type number : Ch_INA3221ILW1               "Corriente LED WHITE1"            [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221ILW1" ]
+      Type number : Ch_INA3221VLW2               "Voltaje LED WHITE2"              [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221VLW2" ]
+      Type number : Ch_INA3221ILW2               "Corriente LED WHITE2"            [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221ILW2" ]
+      Type number : Ch_INA3221VLF                "Voltaje LED FULL"                [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221VLF" ]
+      Type number : Ch_INA3221ILF                "Corriente LED FULL"              [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221ILF" ]
+      Type number : Ch_INA3221VLR                "Voltaje LED RED"                 [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221VLR" ]
+      Type number : Ch_INA3221ILR                "Corriente LED RED"               [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221ILR" ]
+      Type number : Ch_INA3221VLG                "Voltaje LED GREEN"               [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221VLG" ]
+      Type number : Ch_INA3221ILG                "Corriente LED GREEN"             [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221ILG" ]
+      Type number : Ch_INA3221VLB                "Voltaje LED BLUE"                [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221VLB" ]
+      Type number : Ch_INA3221ILB                "Corriente LED BLUE"              [ stateTopic="RicXav/Sala/Acuario/Lampara/INA3221ILB" ]
+      Type number : Ch_AcuarioTemp               "Temperatura Acuario"             [ stateTopic="RicXav/Sala/Acuario/Lampara/AcuarioTemp" ]
+      Type number : Ch_TempLampAcroDisI          "Temperatura Disipador Izquierdo" [ stateTopic="RicXav/Sala/Acuario/Lampara/TempLampDisI" ]
+      Type number : Ch_TempLampAcroDisD          "Temperatura Disipador Derecho"   [ stateTopic="RicXav/Sala/Acuario/Lampara/TempLampDisD" ]
+      Type number : Ch_PHAcro                    "PH Acuario"                      [ stateTopic="RicXav/Sala/Acuario/Lampara/VALPHAC" ]
+      Type number : Ch_VALTDSAC                  "TDS Acuario"                     [ stateTopic="RicXav/Sala/Acuario/Lampara/VALTDSAC" ]
+      Type number : Ch_LampAcroHeartBeat         "Heart Beat Acuario"              [ stateTopic="RicXav/Sala/Acuario/Lampara/LampAcroHeartBeat" ]
+      Type switch : Ch_LamparaAcuarioSwitchFanI  "Ventilador Disipador Izquierdo"  [ stateTopic="RicXav/Sala/Acuario/Lampara/FanI/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/FanI", on="ON", off="OFF" ]
+      Type switch : Ch_LamparaAcuarioSwitchFanD  "Ventilador Dispipador Derecho"   [ stateTopic="RicXav/Sala/Acuario/Lampara/FanD/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/FanD", on="ON", off="OFF" ]
+  }
+}
