@@ -51,7 +51,9 @@ sitemap acuario label="Acuario RicXav"
     Switch item= It_LamparaAcuarioSwitchFanI
     Switch item= It_LamparaAcuarioSwitchFanD
     Switch item= It_FanAcroRule mappings=[ON="ON",OFF="OFF"]
+    Switch item= It_LamparaAcuarioSwitchCO2
     Text item= It_LampAcroHeartBeat
+    Switch item= It_CO2AcroRule mappings=[ON="ON",OFF="OFF"]
   }
 
   Frame label="Rellenador Acuario"

@@ -186,8 +186,8 @@ then
   }
 end
 
-//Regla Alarma de PH alto Acuario RicXav
-rule "Alarma PH Acuario RicXav Alto"
+//Regla Control de PH Acuario RicXav
+rule "Control PH Acuario RicXav"
 when
   Item It_PHAcro changed
 then
@@ -207,13 +207,6 @@ then
       ph_alto_flag = false
     }
   }
-end
-
-//Regla Alarma de PH bajo Acuario RicXav
-rule "Alarma PH Acuario RicXav Bajo"
-when
-  Item It_PHAcro changed
-then
   if(It_PHAcro.state < 6.5)
   {
     if(ph_bajo_flag == false)
@@ -228,6 +221,26 @@ then
     {
       sendBroadcastNotification("PH Acuario RicXav Normal")
       ph_bajo_flag = false
+    }
+  }
+  if(It_PHAcro.state > 7.2)
+  {
+    if(It_CO2AcroRule.state == ON)
+    {
+      if(It_LamparaAcuarioSwitchCO2.state==OFF)
+      {
+        sendCommand(It_LamparaAcuarioSwitchCO2,ON)
+      }
+    }
+  }
+  if(It_PHAcro.state < 6.8)
+  {
+    if(It_CO2AcroRule.state == ON)
+    {
+      if(It_LamparaAcuarioSwitchCO2.state==ON)
+      {
+        sendCommand(It_LamparaAcuarioSwitchCO2,OFF)
+      }
     }
   }
 end

@@ -49,5 +49,6 @@ Bridge mqtt:broker:RicXav_MQTT_Broker [ host="192.168.17.58", secure=false, clie
       Type number : Ch_LampAcroHeartBeat         "Heart Beat Acuario"              [ stateTopic="RicXav/Sala/Acuario/Lampara/LampAcroHeartBeat" ]
       Type switch : Ch_LamparaAcuarioSwitchFanI  "Ventilador Disipador Izquierdo"  [ stateTopic="RicXav/Sala/Acuario/Lampara/FanI/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/FanI", on="ON", off="OFF" ]
       Type switch : Ch_LamparaAcuarioSwitchFanD  "Ventilador Dispipador Derecho"   [ stateTopic="RicXav/Sala/Acuario/Lampara/FanD/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/FanD", on="ON", off="OFF" ]
+      Type switch : Ch_LamparaAcuarioSwitchCO2   "CO2"                             [ stateTopic="RicXav/Sala/Acuario/Lampara/CO2/state", commandTopic="RicXav/Sala/Acuario/Lampara/RcbCmmn/CO2", on="ON", off="OFF" ]
   }
 }
